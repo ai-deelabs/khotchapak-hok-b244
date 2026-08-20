@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khotchapak Hok — สถาบันฝึกพูดบนเวทีและพัฒนาบุคลิกภาพ</title>
+<meta name="description" content="Khotchapak Hok สถาบันฝึกอบรมพัฒนาบุคลิกภาพ การพูดในที่สาธารณะ และทักษะการสื่อสาร ปั้นนักพูดให้ครองเวทีได้ทุกสถานการณ์">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+<style>
+  :root{
+    --background:#14120F;
+    --card:#1E1B17;
+    --bg-accent:#0B0A08;
+    --foreground:#F2EEE6;
+    --muted:#8A8478;
+    --border:#322D26;
+    --primary:#FFB020;
+    --secondary:#4A4038;
+    --accent:#D9A94A;
+    --font-heading:'Kanit', sans-serif;
+    --font-body:'Sarabun', sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--background);
+    color:var(--foreground);
+    font-family:var(--font-body);
+    line-height:1.8;
+    overflow-x:hidden;
+    word-break:break-word;
+    overflow-wrap:break-word;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,h4{
+    font-family:var(--font-heading);
+    font-weight:700;
+    line-height:1.5;
+    text-transform:uppercase;
+    padding-top:.15em;
+  }
+  html[lang="en"] .tight{letter-spacing:-0.02em;}
+  .eyebrow{
+    font-family:var(--font-heading);
+    font-weight:600;
+    color:var(--primary);
+    font-size:.8rem;
+    text-transform:uppercase;
+  }
+  html[lang="en"] .eyebrow{letter-spacing:.18em;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;}
+  section{position:relative;}
+
+  /* ===== NAV ===== */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:18px 0;
+    transition:background .4s ease, padding .4s ease, box-shadow .4s ease, border-color .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(20,18,15,.92);
+    backdrop-filter:blur(10px);
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .navrow{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .logo{
+    font-family:var(--font-heading);
+    font-weight:800;
+    font-size:1.25rem;
+    text-transform:uppercase;
+    display:flex;gap:.35em;
+  }
+  .logo span{color:var(--primary);}
+  nav.links{display:none;align-items:center;gap:34px;}
+  nav.links a{
+    font-family:var(--font-heading);
+    font-weight:600;
+    font-size:.9rem;
+    text-transform:uppercase;
+    color:var(--foreground);
+    padding:8px 2px;
+    position:relative;
+  }
+  html[lang="en"] nav.links a{letter-spacing:.08em;}
+  nav.links a::after{
+    content:'';position:absolute;left:0;bottom:0;height:2px;width:0;
+    background:var(--primary);transition:width .3s ease;
+  }
+  nav.links a:hover::after{width:100%;}
+  .nav-right{display:flex;align-items:center;gap:18px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-family:var(--font-heading);
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:.9rem;
+    padding:.95em 1.7em;
+    border-radius:100px;
+    min-height:44px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+  }
+  html[lang="en"] .btn{letter-spacing:.04em;}
+  .btn-primary{background:var(--primary);color:#14120F;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,176,32,.35);}
+  .btn-outline{background:transparent;color:var(--foreground);border-color:var(--muted);}
+  .btn-outline:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);}
+  .btn-sm{padding:.7em 1.3em;font-size:.78rem;}
+
+  .lang-sw{
+    display:flex;align-items:center;gap:5px;
+    font-size:.78em;color:var(--muted);
+    padding:6px 4px;
+  }
+  .lang-sw:hover{color:var(--primary);}
+  .lang-sw svg{width:14px;height:14px;}
+
+  .hamburger{
+    display:flex;flex-direction:column;justify-content:center;gap:5px;
+    width:44px;height:44px;background:none;border:none;cursor:pointer;
+  }
+  .hamburger span{display:block;width:24px;height:2px;background:var(--foreground);transition:transform .3s ease, opacity .3s ease;margin:0 auto;}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed;inset:0;background:var(--bg-accent);z-index:99;
+    display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;
+    padding:32px;
+    transform:translateY(-100%);
+    transition:transform .45s cubic-bezier(.6,0,.3,1);
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{
+    font-family:var(--font-heading);font-weight:700;font-size:2rem;text-transform:uppercase;
+    padding:14px 0;color:var(--foreground);width:100%;border-bottom:1px solid var(--border);
+  }
+  .mobile-menu a:active{color:var(--primary);}
+  .mobile-menu .btn{margin-top:20px;width:100%;}
+
+  /* ===== HERO ===== */
+  .hero{
+    min-height:100svh;
+    display:flex;align-items:center;
+    padding:120px 0 60px;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 38%, rgba(255,176,32,.10), transparent 70%),
+      var(--background);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background:repeating-linear-gradient(180deg, transparent 0 3px, rgba(255,255,255,.012) 3px 4px);
+    pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:36px;
+    text-align:center;
+  }
+  .hero-copy{max-width:680px;display:flex;flex-direction:column;align-items:center;gap:18px;}
+  .hero h1{
+    font-size:clamp(2.4rem, 8vw, 5rem);
+    line-height:1.55;
+    color:var(--foreground);
+  }
+  .hero h1 em{font-style:normal;color:var(--primary);}
+  .hero p.sub{color:var(--muted);font-size:1.05rem;max-width:520px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;width:100%;}
+  .hero-ctas .btn{width:100%;}
+
+  .spotlight-frame{
+    position:relative;
+    width:min(78vw,340px);
+    aspect-ratio:1/1;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle, rgba(255,176,32,.32) 0%, rgba(255,176,32,.10) 48%, transparent 72%);
+  }
+  .spotlight-frame::before{
+    content:'';position:absolute;inset:-14%;border-radius:50%;
+    border:1px dashed rgba(255,176,32,.25);
+    animation:spin 40s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .spotlight-frame img{
+    width:82%;height:82%;object-fit:cover;border-radius:50%;
+    box-shadow:0 0 0 3px rgba(255,176,32,.45), 0 30px 70px rgba(0,0,0,.65);
+    animation:slowzoom 16s ease-in-out infinite alternate;
+  }
+  @keyframes slowzoom{from{transform:scale(1);}to{transform:scale(1.09);}}
+  .scroll-cue{
+    position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+    color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px;
+    font-size:.75rem;z-index:2;
+  }
+  html[lang="en"] .scroll-cue{letter-spacing:.15em;}
+  .scroll-cue svg{animation:bob 1.8s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+  .side-label{display:none;}
+
+  /* ===== STATS ===== */
+  .stats{
+    background:var(--bg-accent);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    padding:44px 0;
+  }
+  .stats-row{
+    display:flex;gap:32px;overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .stats-row::-webkit-scrollbar{display:none;}
+  .stat{
+    scroll-snap-align:start;
+    flex:0 0 auto;min-width:160px;
+    text-align:center;
+    padding:0 12px;
+  }
+  .stat b{
+    display:block;font-family:var(--font-heading);font-weight:800;
+    font-size:2.4rem;color:var(--primary);
+  }
+  .stat span{color:var(--muted);font-size:.85rem;}
+
+  /* ===== SECTION HEADS ===== */
+  .section-head{max-width:640px;margin-bottom:48px;}
+  .section-head h2{font-size:clamp(2rem,5.5vw,3.2rem);color:var(--foreground);}
+  .section-head p{color:var(--muted);margin-top:14px;}
+
+  section.padded{padding:100px 0;}
+
+  /* ===== PROGRAM LINEUP (accordion) ===== */
+  .lineup{background:var(--background);}
+  .lineup-row{
+    border-top:1px solid var(--border);
+    padding:26px 0;
+    cursor:pointer;
+  }
+  .lineup-row:last-child{border-bottom:1px solid var(--border);}
+  .lineup-head{
+    display:flex;align-items:center;gap:20px;justify-content:space-between;
+  }
+  .lineup-head-left{display:flex;align-items:center;gap:20px;flex:1;min-width:0;}
+  .lineup-num{
+    font-family:var(--font-heading);font-weight:800;color:var(--primary);
+    font-size:1.4rem;flex:0 0 auto;
+  }
+  .lineup-title{font-family:var(--font-heading);font-weight:700;font-size:1.25rem;text-transform:uppercase;color:var(--foreground);}
+  .lineup-row .chev{transition:transform .35s ease;color:var(--muted);flex:0 0 auto;}
+  .lineup-row.open .chev{transform:rotate(180deg);color:var(--primary);}
+  .lineup-body{
+    max-height:0;overflow:hidden;
+    transition:max-height .45s ease, opacity .35s ease, padding .35s ease;
+    opacity:0;
+  }
+  .lineup-row.open .lineup-body{max-height:340px;opacity:1;padding-top:18px;}
+  .lineup-body-inner{
+    display:flex;flex-direction:column;gap:16px;
+    padding-left:calc(1.4rem + 20px);
+  }
+  .lineup-body p{color:var(--muted);max-width:560px;}
+  .lineup-tags{display:flex;flex-wrap:wrap;gap:10px;}
+  .tag{
+    font-size:.78rem;color:var(--accent);border:1px solid var(--border);
+    padding:.5em 1em;border-radius:100px;
+  }
+
+  /* ===== METHOD alternating rows ===== */
+  .method-row{
+    display:grid;grid-template-columns:1fr;gap:28px;
+    align-items:center;
+    padding:36px 0;
+    border-top:1px solid var(--border);
+  }
+  .method-row:last-child{border-bottom:1px solid var(--border);}
+  .method-img{
+    position:relative;
+    border-radius:28px;overflow:hidden;
+    aspect-ratio:4/3;
+  }
+  .method-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .method-img:hover img{transform:scale(1.06);}
+  .method-img::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 60%, rgba(11,10,8,.55));
+  }
+  .method-num{
+    font-family:var(--font-heading);font-weight:800;color:var(--primary);
+    font-size:3rem;line-height:1;opacity:.5;
+  }
+  .method-text h3{font-size:1.7rem;color:var(--foreground);margin-top:6px;}
+  .method-text p{color:var(--muted);margin-top:12px;max-width:480px;}
+
+  /* ===== INSTRUCTOR ===== */
+  .instructor{
+    background:var(--bg-accent);
+    padding:100px 0;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .instructor-grid{
+    display:grid;grid-template-columns:1fr;gap:48px;align-items:center;
+  }
+  .instructor-photo{
+    position:relative;
+    width:min(70vw,320px);
+    aspect-ratio:1;
+    margin:0 auto;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,176,32,.28), transparent 70%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .instructor-photo img{
+    width:86%;height:86%;object-fit:cover;border-radius:50%;
+    box-shadow:0 0 0 3px rgba(255,176,32,.4), 0 30px 60px rgba(0,0,0,.6);
+  }
+  .instructor-copy .eyebrow{display:block;margin-bottom:10px;}
+  .instructor-copy h2{font-size:clamp(1.8rem,5vw,2.6rem);color:var(--foreground);}
+  .instructor-copy p.role{color:var(--primary);font-family:var(--font-heading);font-weight:600;margin-top:6px;text-transform:uppercase;font-size:.95rem;}
+  .instructor-copy p.bio{color:var(--muted);margin-top:18px;max-width:520px;}
+  .instructor-quote{
+    margin-top:22px;padding:20px 24px;border-left:3px solid var(--primary);
+    color:var(--accent);font-family:var(--font-heading);font-size:1.05rem;
+    background:var(--card);border-radius:0 16px 16px 0;
+  }
+  .cred-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px;}
+  .cred{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.9rem;}
+  .cred svg{color:var(--primary);flex:0 0 auto;}
+
+  /* ===== TESTIMONIALS ===== */
+  .testi-scroll{
+    display:flex;gap:22px;overflow-x:auto;padding:10px 4px 24px;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  }
+  .testi-scroll::-webkit-scrollbar{display:none;}
+  .testi-card{
+    scroll-snap-align:start;
+    flex:0 0 auto;width:min(84vw,340px);
+    background:var(--card);border:1px solid var(--border);
+    border-radius:22px;padding:28px;
+    display:flex;flex-direction:column;gap:16px;
+    transition:transform .35s ease, border-color .35s ease;
+  }
+  .testi-card:hover{transform:translateY(-6px);border-color:var(--primary);}
+  .testi-top{display:flex;align-items:center;gap:14px;}
+  .testi-top img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--primary);}
+  .testi-name{font-family:var(--font-heading);font-weight:600;color:var(--foreground);font-size:1rem;}
+  .testi-role{color:var(--muted);font-size:.82rem;}
+  .testi-card p.quote{color:var(--muted);font-size:.96rem;}
+  .stars{display:flex;gap:3px;color:var(--primary);}
+
+  /* ===== GALLERY ===== */
+  .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .gallery-item{
+    position:relative;border-radius:20px;overflow:hidden;aspect-ratio:1;
+    border:1px solid var(--border);
+  }
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease, filter .5s ease;filter:grayscale(.25) brightness(.9);}
+  .gallery-item:hover img{transform:scale(1.1);filter:grayscale(0) brightness(1);}
+  .gallery-item::after{
+    content:'';position:absolute;inset:0;border-radius:20px;
+    box-shadow:inset 0 0 0 0 rgba(255,176,32,0);
+    transition:box-shadow .4s ease;
+  }
+  .gallery-item:hover::after{box-shadow:inset 0 0 0 3px rgba(255,176,32,.6);}
+
+  /* ===== CTA / CONTACT ===== */
+  .cta{
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 20%, rgba(255,176,32,.14), transparent 70%),
+      var(--bg-accent);
+    padding:110px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+  .cta h2{font-size:clamp(2.2rem,8vw,4.4rem);color:var(--foreground);}
+  .cta h2 em{font-style:normal;color:var(--primary);}
+  .cta p{color:var(--muted);max-width:520px;margin:18px auto 32px;}
+  .cta-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+  .contact-grid{
+    margin-top:70px;
+    display:grid;grid-template-columns:1fr;gap:20px;
+    text-align:left;
+  }
+  .contact-card{
+    background:var(--card);border:1px solid var(--border);border-radius:20px;
+    padding:26px;display:flex;gap:16px;align-items:flex-start;
+    transition:border-color .3s ease, transform .3s ease;
+  }
+  .contact-card:hover{border-color:var(--primary);transform:translateY(-4px);}
+  .contact-card svg{color:var(--primary);flex:0 0 auto;margin-top:2px;}
+  .contact-card h4{font-size:1rem;color:var(--foreground);text-transform:none;}
+  .contact-card p{color:var(--muted);font-size:.92rem;margin-top:6px;}
+
+  /* ===== FOOTER ===== */
+  footer{background:var(--background);border-top:1px solid var(--border);padding:60px 0 30px;}
+  .footer-grid{display:grid;grid-template-columns:1fr;gap:36px;}
+  .footer-logo{font-family:var(--font-heading);font-weight:800;font-size:1.5rem;text-transform:uppercase;}
+  .footer-logo span{color:var(--primary);}
+  .footer-desc{color:var(--muted);margin-top:14px;max-width:340px;font-size:.92rem;}
+  .footer-col h5{font-family:var(--font-heading);font-size:.85rem;color:var(--foreground);text-transform:uppercase;margin-bottom:16px;}
+  html[lang="en"] .footer-col h5{letter-spacing:.1em;}
+  .footer-col a{display:block;color:var(--muted);padding:6px 0;font-size:.92rem;}
+  .footer-col a:hover{color:var(--primary);}
+  .footer-social{display:flex;gap:12px;margin-top:16px;}
+  .footer-social a{
+    width:40px;height:40px;border-radius:50%;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    transition:all .3s ease;
+  }
+  .footer-social a:hover{border-color:var(--primary);color:var(--primary);}
+  .footer-bottom{
+    border-top:1px solid var(--border);margin-top:40px;padding-top:24px;
+    display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:.82rem;
+    text-align:center;
+  }
+
+  /* ===== reveal animation ===== */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* ===== DESKTOP ===== */
+  @media(min-width:768px){
+    .wrap{padding:0 40px;}
+    nav.links{display:flex;}
+    .hamburger,.mobile-menu{display:none;}
+    section.padded{padding:140px 0;}
+
+    .hero{padding:0;}
+    .hero-inner{
+      flex-direction:row;justify-content:space-between;align-items:center;
+      text-align:left;gap:40px;
+    }
+    .hero-copy{text-align:left;align-items:flex-start;max-width:440px;}
+    .hero-ctas{justify-content:flex-start;}
+    .hero-ctas .btn{width:auto;}
+    .spotlight-frame{width:min(34vw,460px);}
+    .side-label{
+      display:block;position:absolute;top:50%;
+      color:var(--muted);font-size:.75rem;
+      writing-mode:vertical-rl;
+    }
+    html[lang="en"] .side-label{letter-spacing:.2em;}
+    .side-label.left{left:14px;transform:translateY(-50%) rotate(180deg);}
+    .side-label.right{right:14px;transform:translateY(-50%);}
+
+    .stats-row{justify-content:space-between;overflow:visible;}
+    .stat{min-width:0;}
+
+    .lineup-body-inner{flex-direction:row;justify-content:space-between;align-items:flex-end;gap:40px;}
+
+    .method-row{grid-template-columns:1fr 1fr;gap:64px;}
+    .method-row.reverse .method-img{order:2;}
+    .method-row.reverse .method-text{order:1;}
+
+    .instructor-grid{grid-template-columns:.9fr 1.1fr;gap:70px;}
+    .instructor-photo{width:340px;margin:0;}
+    .instructor-copy{text-align:left;}
+
+    .gallery-grid{grid-template-columns:repeat(4,1fr);}
+
+    .contact-grid{grid-template-columns:repeat(3,1fr);}
+
+    .footer-grid{grid-template-columns:1.4fr 1fr 1fr 1fr;}
+    .footer-bottom{flex-direction:row;justify-content:space-between;text-align:left;}
+  }
+
+  @media(min-width:1024px){
+    .hero h1{font-size:clamp(3rem,6vw,5.6rem);}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap navrow">
+    <a href="#top" class="logo">KHOTCHAPAK<span>HOK</span></a>
+    <nav class="links">
+      <a href="#lineup" data-lang-th="โปรแกรม" data-lang-en="Programs">โปรแกรม</a>
+      <a href="#method" data-lang-th="วิธีการ" data-lang-en="Method">วิธีการ</a>
+      <a href="#instructor" data-lang-th="วิทยากร" data-lang-en="Instructor">วิทยากร</a>
+      <a href="#stories" data-lang-th="เสียงตอบรับ" data-lang-en="Stories">เสียงตอบรับ</a>
+      <a href="#contact" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-sw"><i data-lucide="globe"></i><span class="lang-sw__label">TH</span></div>
+      <a href="#contact" class="btn btn-primary btn-sm" data-lang-th="จองที่นั่ง" data-lang-en="Book Seat">จองที่นั่ง</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#lineup" data-lang-th="โปรแกรม" data-lang-en="Programs">โปรแกรม</a>
+  <a href="#method" data-lang-th="วิธีการ" data-lang-en="Method">วิธีการ</a>
+  <a href="#instructor" data-lang-th="วิทยากร" data-lang-en="Instructor">วิทยากร</a>
+  <a href="#stories" data-lang-th="เสียงตอบรับ" data-lang-en="Stories">เสียงตอบรับ</a>
+  <a href="#contact" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</a>
+  <a href="#contact" class="btn btn-primary" data-lang-th="จองที่นั่ง" data-lang-en="Book Seat">จองที่นั่ง</a>
+</div>
+
+<section class="hero" id="top">
+  <span class="side-label left" data-lang-th="ก่อตั้ง 2557 · สถาบันฝึกเวที" data-lang-en="EST. 2014 · STAGE ACADEMY">ก่อตั้ง 2557 · สถาบันฝึกเวที</span>
+  <span class="side-label right" data-lang-th="กรุงเทพฯ · ประเทศไทย" data-lang-en="BANGKOK · THAILAND">กรุงเทพฯ · ประเทศไทย</span>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow" data-lang-th="บุคลิกภาพ · น้ำเสียง · เวที" data-lang-en="Personality · Voice · Stage">บุคลิกภาพ · น้ำเสียง · เวที</span>
+      <h1 class="tight">พูด<em>ครั้งเดียว</em><br>ให้คนจำได้ทั้งชีวิต</h1>
+      <p class="sub" data-lang-th="Khotchapak Hok ปั้นนักพูดและผู้นำที่ครองเวทีได้ทุกสถานการณ์ ด้วยหลักสูตรที่ผสานจิตวิทยา น้ำเสียง และการวางตัวเข้าไว้ด้วยกัน" data-lang-en="Khotchapak Hok trains speakers and leaders to own any stage — blending psychology, voice command, and physical presence into one system.">Khotchapak Hok ปั้นนักพูดและผู้นำที่ครองเวทีได้ทุกสถานการณ์ ด้วยหลักสูตรที่ผสานจิตวิทยา น้ำเสียง และการวางตัวเข้าไว้ด้วยกัน</p>
+      <div class="hero-ctas">
+        <a href="#lineup" class="btn btn-primary" data-lang-th="ดูโปรแกรมทั้งหมด" data-lang-en="View All Programs">ดูโปรแกรมทั้งหมด</a>
+        <a href="#contact" class="btn btn-outline" data-lang-th="จองที่นั่งเดี๋ยวนี้" data-lang-en="Reserve a Seat">จองที่นั่งเดี๋ยวนี้</a>
+      </div>
+    </div>
+    <div class="spotlight-frame">
+      <img src="https://images.unsplash.com/photo-1759396282913-0f19bfa3390a?w=700&h=700&fit=crop" alt="ผู้พูดยืนอยู่ใต้แสงสปอตไลท์เดี่ยวบนเวทีมืด">
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <span data-lang-th="เลื่อนลง" data-lang-en="SCROLL">เลื่อนลง</span>
+    <i data-lucide="chevron-down"></i>
+  </div>
+</section>
+
+<section class="stats reveal">
+  <div class="wrap stats-row">
+    <div class="stat"><b>12+</b><span data-lang-th="ปีบนเวทีจริง" data-lang-en="Years on real stages">ปีบนเวทีจริง</span></div>
+    <div class="stat"><b>8,500+</b><span data-lang-th="ผู้ผ่านการอบรม" data-lang-en="Speakers trained">ผู้ผ่านการอบรม</span></div>
+    <div class="stat"><b>97%</b><span data-lang-th="ความพึงพอใจ" data-lang-en="Satisfaction rate">ความพึงพอใจ</span></div>
+    <div class="stat"><b>150+</b><span data-lang-th="องค์กรพันธมิตร" data-lang-en="Partner organisations">องค์กรพันธมิตร</span></div>
+  </div>
+</section>
+
+<section class="padded lineup" id="lineup">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-lang-th="รายการโปรแกรม" data-lang-en="Program Lineup">รายการโปรแกรม</span>
+      <h2 style="margin-top:10px;" data-lang-th="เลือกเวทีที่ใช่สำหรับคุณ" data-lang-en="Pick the stage that's yours">เลือกเวทีที่ใช่สำหรับคุณ</h2>
+      <p data-lang-th="สี่หลักสูตรหลัก ออกแบบเหมือนรายการแสดงจริง แต่ละองก์เจาะจุดที่ต้องฝึกจนกลายเป็นสัญชาตญาณ" data-lang-en="Four core programs, staged like a real set list — each act drills the exact skill until it becomes instinct.">สี่หลักสูตรหลัก ออกแบบเหมือนรายการแสดงจริง แต่ละองก์เจาะจุดที่ต้องฝึกจนกลายเป็นสัญชาตญาณ</p>
+    </div>
+
+    <div class="lineup-row reveal open">
+      <div class="lineup-head">
+        <div class="lineup-head-left">
+          <span class="lineup-num">01</span>
+          <span class="lineup-title" data-lang-th="สเตจ เพรเซนซ์" data-lang-en="Stage Presence">สเตจ เพรเซนซ์</span>
+        </div>
+        <i data-lucide="chevron-down" class="chev"></i>
+      </div>
+      <div class="lineup-body">
+        <div class="lineup-body-inner">
+          <p data-lang-th="วางตัวอย่างไรให้ครองพื้นที่บนเวที ตั้งแต่ท่ายืน สายตา ไปจนถึงจังหวะการเดิน เพื่อให้ทุกสายตาจับจ้องมาที่คุณตั้งแต่วินาทีแรก" data-lang-en="Command the room from the first step — stance, eye contact, and blocking so every eye locks onto you before you say a word.">วางตัวอย่างไรให้ครองพื้นที่บนเวที ตั้งแต่ท่ายืน สายตา ไปจนถึงจังหวะการเดิน เพื่อให้ทุกสายตาจับจ้องมาที่คุณตั้งแต่วินาทีแรก</p>
+          <div class="lineup-tags">
+            <span class="tag" data-lang-th="3 วันเข้มข้น" data-lang-en="3-day intensive">3 วันเข้มข้น</span>
+            <span class="tag" data-lang-th="กลุ่มละ 12 คน" data-lang-en="Max 12 per group">กลุ่มละ 12 คน</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lineup-row reveal">
+      <div class="lineup-head">
+        <div class="lineup-head-left">
+          <span class="lineup-num">02</span>
+          <span class="lineup-title" data-lang-th="วอยซ์ คอมมานด์" data-lang-en="Voice Command">วอยซ์ คอมมานด์</span>
+        </div>
+        <i data-lucide="chevron-down" class="chev"></i>
+      </div>
+      <div class="lineup-body">
+        <div class="lineup-body-inner">
+          <p data-lang-th="ฝึกลมหายใจ โทนเสียง และจังหวะพูด ให้เสียงของคุณมีน้ำหนักพอจะสั่งการห้องประชุมได้โดยไม่ต้องตะโกน" data-lang-en="Train breath, tone, and pacing so your voice carries enough weight to command a room without ever raising it.">ฝึกลมหายใจ โทนเสียง และจังหวะพูด ให้เสียงของคุณมีน้ำหนักพอจะสั่งการห้องประชุมได้โดยไม่ต้องตะโกน</p>
+          <div class="lineup-tags">
+            <span class="tag" data-lang-th="4 สัปดาห์" data-lang-en="4 weeks">4 สัปดาห์</span>
+            <span class="tag" data-lang-th="ตัวต่อตัว 1:1" data-lang-en="1-on-1 coaching">ตัวต่อตัว 1:1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lineup-row reveal">
+      <div class="lineup-head">
+        <div class="lineup-head-left">
+          <span class="lineup-num">03</span>
+          <span class="lineup-title" data-lang-th="สตอรี่ เอนจิน" data-lang-en="Story Engine">สตอรี่ เอนจิน</span>
+        </div>
+        <i data-lucide="chevron-down" class="chev"></i>
+      </div>
+      <div class="lineup-body">
+        <div class="lineup-body-inner">
+          <p data-lang-th="ศิลปะการเล่าเรื่องที่ดึงอารมณ์คนฟัง เปลี่ยนข้อมูลแห้งๆ ให้กลายเป็นเรื่องราวที่คนจดจำและพูดถึงต่อ" data-lang-en="The storytelling craft that pulls emotion from an audience — turning dry facts into a narrative people remember and repeat.">ศิลปะการเล่าเรื่องที่ดึงอารมณ์คนฟัง เปลี่ยนข้อมูลแห้งๆ ให้กลายเป็นเรื่องราวที่คนจดจำและพูดถึงต่อ</p>
+          <div class="lineup-tags">
+            <span class="tag" data-lang-th="2 วันเวิร์กช็อป" data-lang-en="2-day workshop">2 วันเวิร์กช็อป</span>
+            <span class="tag" data-lang-th="พร้อมฝึกจริงบนเวที" data-lang-en="Live stage practice">พร้อมฝึกจริงบนเวที</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lineup-row reveal">
+      <div class="lineup-head">
+        <div class="lineup-head-left">
+          <span class="lineup-num">04</span>
+          <span class="lineup-title" data-lang-th="คราวด์ คอนโทรล" data-lang-en="Crowd Control">คราวด์ คอนโทรล</span>
+        </div>
+        <i data-lucide="chevron-down" class="chev"></i>
+      </div>
+      <div class="lineup-body">
+        <div class="lineup-body-inner">
+          <p data-lang-th="รับมือคำถามยาก สถานการณ์กดดัน และคนฟังที่ไม่ง่าย ด้วยเทคนิคควบคุมพื้นที่และดึงห้องกลับมาอยู่ในมือคุณ" data-lang-en="Handle tough questions, high-pressure moments, and difficult crowds with techniques that pull the room back into your hands.">รับมือคำถามยาก สถานการณ์กดดัน และคนฟังที่ไม่ง่าย ด้วยเทคนิคควบคุมพื้นที่และดึงห้องกลับมาอยู่ในมือคุณ</p>
+          <div class="lineup-tags">
+            <span class="tag" data-lang-th="หลักสูตรระดับสูง" data-lang-en="Advanced level">หลักสูตรระดับสูง</span>
+            <span class="tag" data-lang-th="กลุ่มละ 8 คน" data-lang-en="Max 8 per group">กลุ่มละ 8 คน</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="padded" id="method">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-lang-th="วิธีการของเรา" data-lang-en="The Method">วิธีการของเรา</span>
+      <h2 style="margin-top:10px;" data-lang-th="สามชั้นที่สร้างนักพูดตัวจริง" data-lang-en="Three layers that build a real speaker">สามชั้นที่สร้างนักพูดตัวจริง</h2>
+    </div>
+
+    <div class="method-row reveal">
+      <div class="method-img">
+        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=600&fit=crop" alt="ผู้ฟังนั่งอยู่ในห้องมืดจับจ้องไปที่เวทีที่มีแสงสว่าง">
+      </div>
+      <div class="method-text">
+        <span class="method-num">01</span>
+        <h3 data-lang-th="อ่านคนให้ออก" data-lang-en="Warm Read">อ่านคนให้ออก</h3>
+        <p data-lang-th="ก่อนจะพูดให้คนเชื่อ ต้องอ่านอารมณ์ห้องให้ออกก่อน เราฝึกให้คุณสังเกตปฏิกิริยาผู้ฟังแบบเรียลไทม์ และปรับจังหวะพูดให้เข้ากับพลังงานในห้อง" data-lang-en="Before you can persuade a room, you need to read it. We train you to sense audience reaction in real time and adjust pace to match the energy in the space.">ก่อนจะพูดให้คนเชื่อ ต้องอ่านอารมณ์ห้องให้ออกก่อน เราฝึกให้คุณสังเกตปฏิกิริยาผู้ฟังแบบเรียลไทม์ และปรับจังหวะพูดให้เข้ากับพลังงานในห้อง</p>
+      </div>
+    </div>
+
+    <div class="method-row reverse reveal">
+      <div class="method-img">
+        <img src="https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?w=800&h=600&fit=crop" alt="ผู้ชมมองไปยังจอสว่างในห้องมืด">
+      </div>
+      <div class="method-text">
+        <span class="method-num">02</span>
+        <h3 data-lang-th="ควบคุมร่างกาย" data-lang-en="Physical Command">ควบคุมร่างกาย</h3>
+        <p data-lang-th="ภาษากายบอกความมั่นใจก่อนคำพูดจะเริ่ม เราฝึกท่วงท่า มือ และการหายใจ ให้ทุกอิริยาบถส่งพลังงานเดียวกับสิ่งที่คุณพูด" data-lang-en="Body language speaks before the words do. We coach posture, hands, and breath so every movement carries the same energy as your message.">ภาษากายบอกความมั่นใจก่อนคำพูดจะเริ่ม เราฝึกท่วงท่า มือ และการหายใจ ให้ทุกอิริยาบถส่งพลังงานเดียวกับสิ่งที่คุณพูด</p>
+      </div>
+    </div>
+
+    <div class="method-row reveal">
+      <div class="method-img">
+        <img src="https://images.unsplash.com/photo-1765224747170-be7b97010052?w=800&h=600&fit=crop" alt="นักแสดงบนเวทีมืดภายใต้แสงสปอตไลท์">
+      </div>
+      <div class="method-text">
+        <span class="method-num">03</span>
+        <h3 data-lang-th="วิศวกรรมเสียง" data-lang-en="Voice Engineering">วิศวกรรมเสียง</h3>
+        <p data-lang-th="เสียงคือเครื่องมือที่ฝึกได้ เราออกแบบแบบฝึกหัดโทนเสียง จังหวะเงียบ และการเน้นคำ ให้ทุกประโยคของคุณมีน้ำหนักและน่าจดจำ" data-lang-en="Voice is a trainable instrument. We design drills for tone, pause, and emphasis so every sentence you speak lands with weight and stays memorable.">เสียงคือเครื่องมือที่ฝึกได้ เราออกแบบแบบฝึกหัดโทนเสียง จังหวะเงียบ และการเน้นคำ ให้ทุกประโยคของคุณมีน้ำหนักและน่าจดจำ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="instructor" id="instructor">
+  <div class="wrap instructor-grid">
+    <div class="instructor-photo reveal">
+      <img src="https://images.unsplash.com/photo-1638290047807-4c9d389b9aa6?w=600&h=600&fit=crop" alt="โค้ชฮ็อกภายใต้แสงสปอตไลท์เดี่ยว">
+    </div>
+    <div class="instructor-copy reveal">
+      <span class="eyebrow" data-lang-th="ผู้ก่อตั้งและวิทยากรหลัก" data-lang-en="Founder & Lead Instructor">ผู้ก่อตั้งและวิทยากรหลัก</span>
+      <h2>โค้ชฮ็อก — Hok</h2>
+      <p class="role" data-lang-th="ผู้ฝึกนักพูดกว่า 8,500 คนทั่วประเทศ" data-lang-en="Trainer of 8,500+ speakers nationwide">ผู้ฝึกนักพูดกว่า 8,500 คนทั่วประเทศ</p>
+      <p class="bio" data-lang-th="เริ่มต้นจากเวทีเล็กๆ ในมหาวิทยาลัย สู่การเป็นวิทยากรให้องค์กรชั้นนำกว่า 150 แห่ง โค้ชฮ็อกเชื่อว่าทุกคนมีนักพูดที่ยอดเยี่ยมซ่อนอยู่ในตัว เพียงแค่ต้องมีคนช่วยดึงออกมาให้ถูกวิธี" data-lang-en="Starting from small university stages to coaching 150+ leading organisations, Coach Hok believes every person has a great speaker hidden inside — they just need the right push to bring it out.">เริ่มต้นจากเวทีเล็กๆ ในมหาวิทยาลัย สู่การเป็นวิทยากรให้องค์กรชั้นนำกว่า 150 แห่ง โค้ชฮ็อกเชื่อว่าทุกคนมีนักพูดที่ยอดเยี่ยมซ่อนอยู่ในตัว เพียงแค่ต้องมีคนช่วยดึงออกมาให้ถูกวิธี</p>
+      <div class="instructor-quote" data-lang-th="“เวทีไม่ได้น่ากลัว มันแค่รอให้คุณครองมันเท่านั้นเอง”" data-lang-en="“The stage isn't scary — it's just waiting for you to own it.”">"เวทีไม่ได้น่ากลัว มันแค่รอให้คุณครองมันเท่านั้นเอง"</div>
+      <div class="cred-list">
+        <span class="cred"><i data-lucide="award"></i><span data-lang-th="Certified NLP Practitioner" data-lang-en="Certified NLP Practitioner">Certified NLP Practitioner</span></span>
+        <span class="cred"><i data-lucide="mic"></i><span data-lang-th="วิทยากร TEDx 3 เวที" data-lang-en="3x TEDx speaker">วิทยากร TEDx 3 เวที</span></span>
+        <span class="cred"><i data-lucide="users"></i><span data-lang-th="ที่ปรึกษาองค์กร Fortune 500" data-lang-en="Fortune 500 advisor">ที่ปรึกษาองค์กร Fortune 500</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="padded" id="stories">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-lang-th="เสียงจากเวทีจริง" data-lang-en="Voices From The Stage">เสียงจากเวทีจริง</span>
+      <h2 style="margin-top:10px;" data-lang-th="พวกเขาเคยกลัวเวที ก่อนจะครองมัน" data-lang-en="They used to fear the stage. Now they own it.">พวกเขาเคยกลัวเวที ก่อนจะครองมัน</h2>
+    </div>
+    <div class="testi-scroll reveal">
+      <div class="testi-card">
+        <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+        <p class="quote" data-lang-th="หลังจบคอร์ส Stage Presence ผมพรีเซนต์ต่อบอร์ดบริหารได้โดยไม่มือสั่นอีกเลย ความมั่นใจที่ได้กลับมามันคุ้มค่ามาก" data-lang-en="After Stage Presence, I could present to the executive board without my hands shaking anymore. The confidence I gained was worth every baht.">หลังจบคอร์ส Stage Presence ผมพรีเซนต์ต่อบอร์ดบริหารได้โดยไม่มือสั่นอีกเลย ความมั่นใจที่ได้กลับมามันคุ้มค่ามาก</p>
+        <div class="testi-top">
+          <img src="https://images.unsplash.com/photo-1608549950158-6d1dc2022ccd?w=120&h=120&fit=crop" alt="ผู้เข้าอบรมชาย">
+          <div>
+            <div class="testi-name">ธีรพัฒน์ ว.</div>
+            <div class="testi-role" data-lang-th="ผู้จัดการฝ่ายการตลาด" data-lang-en="Marketing Manager">ผู้จัดการฝ่ายการตลาด</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+        <p class="quote" data-lang-th="Voice Command เปลี่ยนน้ำเสียงของฉันจริงๆ ตอนนี้พูดในที่ประชุมแล้วทุกคนฟัง ไม่ต้องพูดดังแต่มีน้ำหนักกว่าเดิมมาก" data-lang-en="Voice Command genuinely changed my tone. Now when I speak in meetings, people actually listen — not louder, just far more weight.">Voice Command เปลี่ยนน้ำเสียงของฉันจริงๆ ตอนนี้พูดในที่ประชุมแล้วทุกคนฟัง ไม่ต้องพูดดังแต่มีน้ำหนักกว่าเดิมมาก</p>
+        <div class="testi-top">
+          <img src="https://images.unsplash.com/photo-1546681887-e1150477e6e7?w=120&h=120&fit=crop" alt="ผู้เข้าอบรมหญิง">
+          <div>
+            <div class="testi-name">ปวีณา ส.</div>
+            <div class="testi-role" data-lang-th="เจ้าของธุรกิจ" data-lang-en="Business Owner">เจ้าของธุรกิจ</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+        <p class="quote" data-lang-th="Story Engine สอนให้ฉันเล่าเรื่องแบรนด์ได้น่าติดตามกว่าเดิมมาก ลูกค้าจดจำแบรนด์เราได้ดีขึ้นตั้งแต่งานอีเวนต์ครั้งล่าสุด" data-lang-en="Story Engine taught me to tell our brand story in a way that actually sticks. Clients remembered us far better since our last event.">Story Engine สอนให้ฉันเล่าเรื่องแบรนด์ได้น่าติดตามกว่าเดิมมาก ลูกค้าจดจำแบรนด์เราได้ดีขึ้นตั้งแต่งานอีเวนต์ครั้งล่าสุด</p>
+        <div class="testi-top">
+          <img src="https://images.unsplash.com/photo-1613730317319-bc2d10ae54ff?w=120&h=120&fit=crop" alt="ผู้เข้าอบรมหญิงภาพขาวดำ">
+          <div>
+            <div class="testi-name">กมลชนก อ.</div>
+            <div class="testi-role" data-lang-th="ผู้จัดการแบรนด์" data-lang-en="Brand Manager">ผู้จัดการแบรนด์</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="padded" style="background:var(--bg-accent);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-lang-th="ช่วงเวลาบนเวทีจริง" data-lang-en="Live Moments">ช่วงเวลาบนเวทีจริง</span>
+      <h2 style="margin-top:10px;" data-lang-th="บรรยากาศจากคลาสจริง" data-lang-en="Straight from the classroom">บรรยากาศจากคลาสจริง</h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1765224747170-be7b97010052?w=500&h=500&fit=crop" alt="แสงสปอตไลท์บนเวทีมืด"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?w=500&h=500&fit=crop" alt="ผู้ชมมองไปยังเวทีสว่างในห้องมืด"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=500&h=500&fit=crop" alt="ฝูงชนหันหน้าเข้าหาเวทีที่มีแสงไฟ"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=500&h=500&fit=crop" alt="ผู้ชมยกมือปรบมือด้วยความตื่นเต้น"></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow" data-lang-th="พร้อมขึ้นเวทีหรือยัง" data-lang-en="Ready When You Are">พร้อมขึ้นเวทีหรือยัง</span>
+      <h2 class="tight" style="margin-top:14px;">พร้อม<em>ครองเวที</em><br>หรือยัง?</h2>
+      <p data-lang-th="ทักหาเราวันนี้ ทีมงานจะช่วยแนะนำโปรแกรมที่เหมาะกับเป้าหมายของคุณที่สุด" data-lang-en="Reach out today and our team will match you with the program that fits your goal best.">ทักหาเราวันนี้ ทีมงานจะช่วยแนะนำโปรแกรมที่เหมาะกับเป้าหมายของคุณที่สุด</p>
+      <div class="cta-ctas">
+        <a href="tel:+66812345678" class="btn btn-primary" data-lang-th="โทรจองเลย" data-lang-en="Call to Book">โทรจองเลย</a>
+        <a href="#" class="btn btn-outline" data-lang-th="แชทผ่าน LINE" data-lang-en="Chat on LINE">แชทผ่าน LINE</a>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <i data-lucide="phone"></i>
+        <div>
+          <h4 data-lang-th="โทรศัพท์" data-lang-en="Phone">โทรศัพท์</h4>
+          <p>081-234-5678</p>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <i data-lucide="mail"></i>
+        <div>
+          <h4 data-lang-th="อีเมล" data-lang-en="Email">อีเมล</h4>
+          <p>hello@khotchapakhok.com</p>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <i data-lucide="map-pin"></i>
+        <div>
+          <h4 data-lang-th="สตูดิโอฝึกเวที" data-lang-en="Studio Address">สตูดิโอฝึกเวที</h4>
+          <p data-lang-th="ถนนสุขุมวิท กรุงเทพฯ" data-lang-en="Sukhumvit Road, Bangkok">ถนนสุขุมวิท กรุงเทพฯ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <a href="#top" class="footer-logo">KHOTCHAPAK<span>HOK</span></a>
+      <p class="footer-desc" data-lang-th="สถาบันฝึกพูดบนเวทีและพัฒนาบุคลิกภาพ สำหรับผู้ที่อยากครองห้องได้ทุกครั้งที่พูด" data-lang-en="A stage-speaking and personality development academy for anyone who wants to own the room every time they speak.">สถาบันฝึกพูดบนเวทีและพัฒนาบุคลิกภาพ สำหรับผู้ที่อยากครองห้องได้ทุกครั้งที่พูด</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <a href="#" aria-label="Youtube"><i data-lucide="youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5 data-lang-th="เมนู" data-lang-en="Menu">เมนู</h5>
+      <a href="#lineup" data-lang-th="โปรแกรม" data-lang-en="Programs">โปรแกรม</a>
+      <a href="#method" data-lang-th="วิธีการ" data-lang-en="Method">วิธีการ</a>
+      <a href="#instructor" data-lang-th="วิทยากร" data-lang-en="Instructor">วิทยากร</a>
+    </div>
+    <div class="footer-col">
+      <h5 data-lang-th="โปรแกรม" data-lang-en="Programs">โปรแกรม</h5>
+      <a href="#lineup" data-lang-th="สเตจ เพรเซนซ์" data-lang-en="Stage Presence">สเตจ เพรเซนซ์</a>
+      <a href="#lineup" data-lang-th="วอยซ์ คอมมานด์" data-lang-en="Voice Command">วอยซ์ คอมมานด์</a>
+      <a href="#lineup" data-lang-th="สตอรี่ เอนจิน" data-lang-en="Story Engine">สตอรี่ เอนจิน</a>
+    </div>
+    <div class="footer-col">
+      <h5 data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</h5>
+      <a href="tel:+66812345678">081-234-5678</a>
+      <a href="mailto:hello@khotchapakhok.com">hello@khotchapakhok.com</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span data-lang-th="© 2569 Khotchapak Hok สงวนลิขสิทธิ์" data-lang-en="© 2026 Khotchapak Hok. All rights reserved.">© 2569 Khotchapak Hok สงวนลิขสิทธิ์</span>
+    <span data-lang-th="ออกแบบด้วยความตั้งใจ เพื่อทุกเวทีที่คุณจะครอง" data-lang-en="Crafted with intent, for every stage you'll own.">ออกแบบด้วยความตั้งใจ เพื่อทุกเวทีที่คุณจะครอง</span>
+  </div>
+</footer>
+
+<script>
+  // header scroll state
+  var header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 40){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  });
+
+  // mobile menu
+  var hb = document.getElementById('hamburgerBtn');
+  var mm = document.getElementById('mobileMenu');
+  hb.addEventListener('click', function(){
+    hb.classList.toggle('open');
+    mm.classList.toggle('open');
+  });
+  mm.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      hb.classList.remove('open');
+      mm.classList.remove('open');
+    });
+  });
+
+  // accordion lineup
+  document.querySelectorAll('.lineup-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      var wasOpen = row.classList.contains('open');
+      document.querySelectorAll('.lineup-row').forEach(function(r){ r.classList.remove('open'); });
+      if(!wasOpen){ row.classList.add('open'); }
+    });
+  });
+
+  // reveal on scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  lucide.createIcons();
+</script>
+
+<script>
+(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
+</script>
+
+</body>
+</html>

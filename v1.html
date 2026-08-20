@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ขจกโหก — สถาบันพัฒนาบุคลิกภาพและการพูดในที่สาธารณะ</title>
+<meta name="description" content="ขจกโหก สถาบันฝึกอบรมพัฒนาบุคลิกภาพ การพูดในที่สาธารณะ และการสื่อสาร เรียนรู้ที่จะเล่าเรื่องของตัวเองอย่างมั่นใจ ในบรรยากาศอบอุ่นและเป็นธรรมชาติ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pridi:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0"></script>
+<style>
+  :root{
+    --background:#F5EDE1;
+    --card:#FBF6EC;
+    --bg-accent:#E8DCC8;
+    --foreground:#4A3428;
+    --muted:#8C7358;
+    --border:#D8C6A6;
+    --primary:#C1673D;
+    --secondary:#7C6A4E;
+    --accent:#A8432B;
+    --font-heading:'Pridi', serif;
+    --font-body:'IBM Plex Sans Thai', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--background);
+    color:var(--foreground);
+    font-family:var(--font-body);
+    font-weight:400;
+    line-height:1.9;
+    font-size:16px;
+    word-break:break-word;
+    overflow-wrap:break-word;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,h4{
+    font-family:var(--font-heading);
+    font-weight:500;
+    line-height:1.5;
+    margin:0;
+    color:var(--foreground);
+  }
+  p{margin:0;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;}
+  [lang="en"] .eyebrow, [lang="en"] .tag, [lang="en"] .logo-word, [lang="en"] .stat-label, [lang="en"] .nav-links a, [lang="en"] .foot-label{
+    letter-spacing:0.14em;
+  }
+  .eyebrow{
+    font-size:0.72rem;
+    text-transform:uppercase;
+    color:var(--primary);
+    font-weight:600;
+    padding:2px 0;
+    display:inline-block;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    padding:20px 0;
+    transition:background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+  }
+  header.scrolled{
+    background:rgba(245,237,225,0.92);
+    backdrop-filter:blur(10px);
+    padding:12px 0;
+    box-shadow:0 4px 18px rgba(74,52,40,0.08);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:var(--font-heading);font-size:1.5rem;color:var(--foreground);display:flex;flex-direction:column;line-height:1.1;}
+  .logo-word{font-size:1.35rem;font-weight:600;letter-spacing:0.02em;}
+  .logo-sub{font-size:0.6rem;color:var(--muted);text-transform:uppercase;margin-top:4px;font-family:var(--font-body);}
+  .nav-links{display:none;gap:34px;align-items:center;}
+  .nav-links a{font-size:0.85rem;padding:8px 0;position:relative;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:2px;width:0;height:1px;background:var(--primary);transition:width 0.3s ease;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-right{display:flex;align-items:center;gap:20px;}
+  .lang-sw{display:flex;align-items:center;gap:5px;font-size:0.78em;color:var(--foreground);opacity:0.85;padding:8px;}
+  .lang-sw svg{width:14px;height:14px;}
+  .burger{display:flex;background:none;border:none;cursor:pointer;padding:10px;color:var(--foreground);}
+  .nav-cta{display:none;}
+
+  .mobile-menu{
+    position:fixed;top:0;right:0;height:100%;width:78%;max-width:320px;
+    background:var(--card);
+    z-index:1100;
+    transform:translateX(100%);
+    transition:transform 0.4s ease;
+    padding:28px 26px;
+    box-shadow:-8px 0 30px rgba(74,52,40,0.15);
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .mobile-menu.open{transform:translateX(0);}
+  .mobile-menu a{font-size:1.05rem;padding:14px 4px;border-bottom:1px solid var(--border);}
+  .mobile-menu-close{align-self:flex-end;background:none;border:none;padding:10px;cursor:pointer;color:var(--foreground);}
+  .menu-overlay{position:fixed;inset:0;background:rgba(74,52,40,0.35);z-index:1050;opacity:0;pointer-events:none;transition:opacity 0.35s ease;}
+  .menu-overlay.show{opacity:1;pointer-events:auto;}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:0.95em 1.7em;
+    border-radius:999px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:0.95rem;
+    min-height:44px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+  .btn-primary{background:var(--primary);color:#FBF6EC;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(193,103,61,0.35);}
+  .btn-secondary{background:transparent;color:var(--foreground);border-color:var(--foreground);}
+  .btn-secondary:hover{background:var(--foreground);color:var(--card);}
+  .btn-outline-light{background:transparent;color:#FBF6EC;border-color:rgba(251,246,236,0.6);}
+  .btn-outline-light:hover{background:#FBF6EC;color:var(--foreground);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:128px 0 0;
+    overflow:visible;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    align-items:center;
+  }
+  .hero-text{padding:0 24px 40px;position:relative;z-index:2;}
+  .hero-text .eyebrow{margin-bottom:18px;}
+  .hero-title{
+    font-size:2.6rem;
+    padding-top:0.2em;
+    color:var(--foreground);
+  }
+  .hero-title em{font-style:italic;color:var(--primary);}
+  .hero-sub{margin-top:22px;color:var(--muted);font-size:1.05rem;max-width:46ch;}
+  .hero-cta{margin-top:34px;display:flex;flex-wrap:wrap;gap:16px;}
+  .hero-media{
+    position:relative;
+    width:100%;
+    height:56vw;
+    max-height:520px;
+    overflow:hidden;
+    border-radius:0 0 0 90px;
+  }
+  .hero-media img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:slowzoom 18s ease-in-out infinite alternate;}
+  @keyframes slowzoom{from{transform:scale(1.0);}to{transform:scale(1.12);}}
+  .hero-media::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(74,52,40,0.05), rgba(74,52,40,0.28));
+  }
+  .hero-caption{
+    position:absolute;bottom:18px;left:20px;z-index:3;
+    color:#FBF6EC;font-size:0.68rem;text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;
+  }
+  .hero-caption .dot{width:5px;height:5px;border-radius:50%;background:var(--primary);}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{position:relative;padding:76px 0;}
+  .section-head{margin-bottom:44px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-title{font-size:2rem;padding-top:0.15em;max-width:16ch;}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{background:var(--bg-accent);}
+  .philo-grid{display:grid;grid-template-columns:1fr;gap:36px;align-items:center;}
+  .philo-quote{font-family:var(--font-heading);font-size:1.7rem;line-height:1.6;color:var(--foreground);padding-top:0.2em;}
+  .philo-quote .mark{color:var(--primary);font-size:2.2rem;line-height:0;position:relative;top:16px;}
+  .philo-img-wrap{position:relative;}
+  .philo-img{
+    width:100%;border-radius:140px 20px 140px 20px;
+    box-shadow:0 24px 50px rgba(74,52,40,0.18);
+  }
+  .philo-tag{
+    position:absolute;bottom:-18px;left:-14px;
+    background:var(--card);border:1px solid var(--border);
+    border-radius:20px;padding:14px 20px;
+    font-size:0.72rem;text-transform:uppercase;color:var(--muted);
+    box-shadow:0 10px 24px rgba(74,52,40,0.12);
+  }
+
+  /* ---------- COURSES (numbered editorial rows) ---------- */
+  .courses{background:var(--background);}
+  .course-row{
+    display:grid;grid-template-columns:1fr;gap:26px;
+    padding:44px 0;border-top:1px solid var(--border);
+    align-items:center;
+  }
+  .course-row:last-child{border-bottom:1px solid var(--border);}
+  .course-num{
+    font-family:var(--font-heading);font-size:3.4rem;color:var(--bg-accent);
+    -webkit-text-stroke:1.5px var(--primary);
+    color:transparent;
+    line-height:1;
+  }
+  .course-body h3{font-size:1.5rem;padding-top:0.15em;margin-bottom:12px;}
+  .course-body p{color:var(--muted);max-width:56ch;}
+  .course-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+  .course-tags span{
+    font-size:0.7rem;text-transform:uppercase;color:var(--secondary);
+    border:1px solid var(--border);border-radius:999px;padding:6px 14px;
+  }
+  .course-media{position:relative;}
+  .course-media img{width:100%;height:230px;object-fit:cover;border-radius:26px;transition:transform 0.5s ease;}
+  .course-media:hover img{transform:scale(1.04);}
+
+  /* ---------- STATS / TRUST ---------- */
+  .trust{background:var(--foreground);color:#F5EDE1;}
+  .trust .eyebrow{color:#E4B394;}
+  .trust h2{color:#F5EDE1;}
+  .trust-grid{display:grid;grid-template-columns:1fr;gap:40px;}
+  .trust-quote{font-family:var(--font-heading);font-size:1.6rem;line-height:1.6;padding-top:0.2em;}
+  .trust-quote-name{margin-top:20px;font-size:0.8rem;color:#D8C6A6;}
+  .stat-list{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  .stat-num{font-family:var(--font-heading);font-size:2.4rem;color:#E4B394;padding-top:0.15em;}
+  .stat-label{font-size:0.7rem;text-transform:uppercase;color:#D8C6A6;margin-top:6px;}
+
+  /* ---------- FOUNDER ---------- */
+  .founder{background:var(--bg-accent);}
+  .founder-grid{display:grid;grid-template-columns:1fr;gap:0;align-items:center;}
+  .founder-media{position:relative;}
+  .founder-media img{
+    width:100%;height:420px;object-fit:cover;
+    border-radius:0 120px 0 120px;
+  }
+  .founder-text{padding:34px 4px 0;}
+  .founder-text h3{font-size:1.8rem;padding-top:0.15em;margin-bottom:6px;}
+  .founder-role{color:var(--primary);font-size:0.85rem;margin-bottom:20px;display:block;}
+  .founder-text p{color:var(--muted);margin-bottom:16px;}
+  .founder-sign{font-family:var(--font-heading);font-size:1.3rem;color:var(--foreground);margin-top:20px;font-style:italic;}
+
+  /* ---------- HOW IT WORKS (steps timeline) ---------- */
+  .steps{background:var(--background);}
+  .steps-list{position:relative;padding-left:28px;border-left:2px dashed var(--border);}
+  .step{position:relative;padding:0 0 40px 24px;}
+  .step:last-child{padding-bottom:0;}
+  .step::before{
+    content:attr(data-step);
+    position:absolute;left:-40px;top:0;
+    width:34px;height:34px;border-radius:50%;
+    background:var(--card);border:1px solid var(--primary);color:var(--primary);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-heading);font-size:0.85rem;
+  }
+  .step h4{font-size:1.15rem;margin-bottom:8px;}
+  .step p{color:var(--muted);max-width:56ch;}
+
+  /* ---------- TESTIMONIALS (horizontal scroll) ---------- */
+  .testimonials{background:var(--bg-accent);}
+  .t-scroll{
+    display:flex;gap:20px;overflow-x:auto;padding:8px 4px 24px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .t-scroll::-webkit-scrollbar{height:6px;}
+  .t-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+  .t-card{
+    scroll-snap-align:start;
+    flex:0 0 82%;
+    background:var(--card);
+    border-radius:24px;
+    padding:28px 26px;
+    border:1px solid var(--border);
+  }
+  .t-card p{color:var(--foreground);font-size:1rem;margin-bottom:20px;}
+  .t-person{display:flex;align-items:center;gap:12px;}
+  .t-person img{width:46px;height:46px;border-radius:50%;object-fit:cover;}
+  .t-name{font-size:0.9rem;font-weight:600;}
+  .t-role{font-size:0.72rem;color:var(--muted);}
+
+  /* ---------- CTA FULL BLEED ---------- */
+  .cta-bleed{
+    position:relative;
+    min-height:420px;
+    display:flex;align-items:center;
+    color:#FBF6EC;
+    overflow:hidden;
+  }
+  .cta-bleed img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+  .cta-bleed::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(120deg, rgba(74,52,40,0.82), rgba(74,52,40,0.38));
+    z-index:1;
+  }
+  .cta-inner{position:relative;z-index:2;padding:60px 0;}
+  .cta-inner h2{color:#FBF6EC;font-size:2.1rem;max-width:18ch;padding-top:0.2em;}
+  .cta-inner p{color:#EFE4D2;margin-top:16px;max-width:48ch;}
+  .cta-inner .hero-cta{margin-top:30px;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{background:var(--foreground);color:#EFE4D2;padding:64px 0 30px;}
+  .foot-grid{display:grid;grid-template-columns:1fr;gap:40px;}
+  .foot-logo{font-family:var(--font-heading);font-size:1.6rem;color:#F5EDE1;}
+  .foot-tagline{color:#C9B79A;margin-top:14px;max-width:38ch;font-size:0.9rem;}
+  .foot-label{font-size:0.72rem;text-transform:uppercase;color:#E4B394;margin-bottom:14px;display:block;}
+  .foot-col a, .foot-col p{display:block;color:#EFE4D2;margin-bottom:12px;font-size:0.92rem;}
+  .foot-col a:hover{color:var(--accent);}
+  .foot-social{display:flex;gap:14px;margin-top:6px;}
+  .foot-social a{width:40px;height:40px;border-radius:50%;border:1px solid rgba(239,228,210,0.3);display:flex;align-items:center;justify-content:center;transition:background 0.3s ease, transform 0.3s ease;}
+  .foot-social a:hover{background:var(--primary);transform:translateY(-3px);border-color:var(--primary);}
+  .foot-bottom{border-top:1px solid rgba(239,228,210,0.18);margin-top:44px;padding-top:24px;font-size:0.78rem;color:#B99F80;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;}
+
+  /* ---------- DESKTOP ---------- */
+  @media(min-width:768px){
+    .wrap{padding:0 48px;}
+    .nav-links{display:flex;}
+    .burger{display:none;}
+    .nav-cta{display:inline-flex;}
+    .hero{padding:150px 0 0;}
+    .hero-grid{grid-template-columns:1.05fr 1fr;align-items:stretch;}
+    .hero-text{padding:60px 20px 60px 0;}
+    .hero-title{font-size:3.6rem;}
+    .hero-media{
+      height:auto;max-height:none;
+      margin-right:calc(-1 * ((100vw - 100%) / 2));
+      border-radius:0 0 0 160px;
+    }
+    .section-title{font-size:2.6rem;}
+    .philo-grid{grid-template-columns:0.95fr 1.05fr;gap:70px;}
+    .philo-quote{font-size:2.1rem;}
+    .philo-img-wrap{order:2;}
+    .philo-text{order:1;}
+    .course-row{grid-template-columns:80px 1fr 1fr;gap:40px;}
+    .course-row:nth-child(even) .course-media{order:3;}
+    .course-row:nth-child(even) .course-body{order:2;}
+    .course-media img{height:280px;}
+    .trust-grid{grid-template-columns:1.2fr 1fr;gap:70px;}
+    .founder-grid{grid-template-columns:0.9fr 1.1fr;gap:60px;}
+    .founder-text{padding:0 20px 0 0;}
+    .founder-media img{height:520px;}
+    .t-card{flex:0 0 380px;}
+    .cta-inner{max-width:640px;}
+    .foot-grid{grid-template-columns:1.3fr 1fr 1fr;}
+  }
+  @media(min-width:1080px){
+    .hero-title{font-size:4.2rem;}
+    .hero-media{width:52vw;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="logo">
+        <span class="logo-word">KHOTCHAPAK HOK</span>
+        <span class="logo-sub" data-lang-th="สถาบันพัฒนาบุคลิกภาพ" data-lang-en="Personality &amp; Voice Institute">สถาบันพัฒนาบุคลิกภาพ</span>
+      </a>
+      <div class="nav-links">
+        <a href="#philosophy" data-lang-th="แนวคิด" data-lang-en="Philosophy">แนวคิด</a>
+        <a href="#courses" data-lang-th="หลักสูตร" data-lang-en="Courses">หลักสูตร</a>
+        <a href="#founder" data-lang-th="ผู้ก่อตั้ง" data-lang-en="Founder">ผู้ก่อตั้ง</a>
+        <a href="#testimonials" data-lang-th="เสียงจากผู้เรียน" data-lang-en="Stories">เสียงจากผู้เรียน</a>
+        <a href="#contact" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</a>
+      </div>
+      <div class="nav-right">
+        <a href="#contact" class="btn btn-primary nav-cta" data-lang-th="จองที่นั่ง" data-lang-en="Reserve a Seat">จองที่นั่ง</a>
+        <div class="lang-sw" aria-label="Language switch">
+          <i data-lucide="globe" width="14" height="14"></i>
+          <span class="lang-sw__label">TH</span>
+        </div>
+        <button class="burger" id="burgerBtn" aria-label="Open menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><i data-lucide="x"></i></button>
+  <a href="#philosophy" data-lang-th="แนวคิด" data-lang-en="Philosophy">แนวคิด</a>
+  <a href="#courses" data-lang-th="หลักสูตร" data-lang-en="Courses">หลักสูตร</a>
+  <a href="#founder" data-lang-th="ผู้ก่อตั้ง" data-lang-en="Founder">ผู้ก่อตั้ง</a>
+  <a href="#testimonials" data-lang-th="เสียงจากผู้เรียน" data-lang-en="Stories">เสียงจากผู้เรียน</a>
+  <a href="#contact" data-lang-th="ติดต่อ" data-lang-en="Contact">ติดต่อ</a>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-text reveal in">
+          <span class="eyebrow" data-lang-th="บุคลิกภาพ · การพูด · การสื่อสาร" data-lang-en="Presence · Voice · Connection">บุคลิกภาพ · การพูด · การสื่อสาร</span>
+          <h1 class="hero-title" data-lang-th="เล่าเรื่องของคุณ ให้เสียงที่แท้จริงได้ยิน" data-lang-en="Tell your story, in a voice that finally sounds like <em>you</em>.">เล่าเรื่องของคุณ ให้เสียงที่แท้จริงได้ยิน</h1>
+          <p class="hero-sub" data-lang-th="ขจกโหก คือพื้นที่เรียนรู้ที่ไม่เร่งรีบ ออกแบบมาให้คุณค่อย ๆ ค้นพบบุคลิกภาพ น้ำเสียง และความมั่นใจของตัวเอง เหมือนแสงยามเช้าที่ค่อย ๆ ส่องผ่านม่านหน้าต่าง" data-lang-en="Khotchapak Hok is an unhurried learning space, built for you to slowly rediscover your presence, your voice, your confidence — like morning light easing through a curtain.">ขจกโหก คือพื้นที่เรียนรู้ที่ไม่เร่งรีบ ออกแบบมาให้คุณค่อย ๆ ค้นพบบุคลิกภาพ น้ำเสียง และความมั่นใจของตัวเอง เหมือนแสงยามเช้าที่ค่อย ๆ ส่องผ่านม่านหน้าต่าง</p>
+          <div class="hero-cta">
+            <a href="#courses" class="btn btn-primary" data-lang-th="ดูหลักสูตรทั้งหมด" data-lang-en="View All Courses">ดูหลักสูตรทั้งหมด</a>
+            <a href="#philosophy" class="btn btn-secondary" data-lang-th="แนวคิดของเรา" data-lang-en="Our Philosophy">แนวคิดของเรา</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="https://images.unsplash.com/photo-1581714161666-dade083654ae?w=1000&h=1100&fit=crop" alt="ผู้หญิงยิ้มอย่างมั่นใจในแสงยามเย็น">
+          <span class="hero-caption"><span class="dot"></span> <span data-lang-th="รุ่นที่ 18 · หัวหิน" data-lang-en="Batch 18 · Hua Hin">รุ่นที่ 18 · หัวหิน</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philosophy" id="philosophy">
+    <div class="wrap">
+      <div class="philo-grid">
+        <div class="philo-text reveal">
+          <span class="eyebrow" data-lang-th="แนวคิดของเรา" data-lang-en="Our Philosophy">แนวคิดของเรา</span>
+          <p class="philo-quote"><span class="mark">“</span><span data-lang-th="เราไม่ได้สอนให้คุณเป็นคนอื่น เราแค่ช่วยปัดฝุ่นความมั่นใจที่มีอยู่แล้วในตัวคุณ ให้กลับมาส่องแสงอีกครั้ง" data-lang-en="We don't teach you to become someone else. We simply help dust off the confidence you already carry, until it shines again.">เราไม่ได้สอนให้คุณเป็นคนอื่น เราแค่ช่วยปัดฝุ่นความมั่นใจที่มีอยู่แล้วในตัวคุณ ให้กลับมาส่องแสงอีกครั้ง</span></p>
+          <p style="margin-top:24px;color:var(--muted);max-width:52ch;" data-lang-th="ตลอด 12 ปีที่ผ่านมา เราเชื่อว่าบุคลิกภาพที่ดีไม่ได้มาจากการท่องจำสูตรสำเร็จ แต่มาจากความเข้าใจตัวเอง ความสม่ำเสมอ และพื้นที่ปลอดภัยให้ได้ลองผิดลองถูก" data-lang-en="For 12 years, we've believed good presence isn't memorised from a formula — it comes from self-understanding, consistency, and a safe space to try, stumble, and try again.">ตลอด 12 ปีที่ผ่านมา เราเชื่อว่าบุคลิกภาพที่ดีไม่ได้มาจากการท่องจำสูตรสำเร็จ แต่มาจากความเข้าใจตัวเอง ความสม่ำเสมอ และพื้นที่ปลอดภัยให้ได้ลองผิดลองถูก</p>
+        </div>
+        <div class="philo-img-wrap reveal">
+          <img class="philo-img" src="https://images.unsplash.com/photo-1667644969034-864b7411b639?w=800&h=760&fit=crop" alt="คนเดินอย่างสงบในทุ่งหญ้าแสงทอง">
+          <span class="philo-tag" data-lang-th="ก้าวช้า ๆ แต่มั่นคง" data-lang-en="Slow steps, steady ground">ก้าวช้า ๆ แต่มั่นคง</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section class="courses" id="courses">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-lang-th="หลักสูตรของเรา" data-lang-en="Our Courses">หลักสูตรของเรา</span>
+        <h2 class="section-title" data-lang-th="สามบทเรียน สู่เสียงที่เป็นคุณ" data-lang-en="Three chapters toward a voice that's yours">สามบทเรียน สู่เสียงที่เป็นคุณ</h2>
+      </div>
+
+      <div class="course-row reveal">
+        <div class="course-num">01</div>
+        <div class="course-body">
+          <h3 data-lang-th="พัฒนาบุคลิกภาพ" data-lang-en="Personality Development">พัฒนาบุคลิกภาพ</h3>
+          <p data-lang-th="เข้าใจภาษากาย น้ำเสียง และการวางตัวในสถานการณ์ต่าง ๆ เพื่อให้ผู้อื่นสัมผัสได้ถึงความมั่นใจของคุณตั้งแต่วินาทีแรกที่พบกัน" data-lang-en="Understand body language, tone, and presence across situations — so people feel your confidence from the very first moment they meet you.">เข้าใจภาษากาย น้ำเสียง และการวางตัวในสถานการณ์ต่าง ๆ เพื่อให้ผู้อื่นสัมผัสได้ถึงความมั่นใจของคุณตั้งแต่วินาทีแรกที่พบกัน</p>
+          <div class="course-tags">
+            <span data-lang-th="6 สัปดาห์" data-lang-en="6 Weeks">6 สัปดาห์</span>
+            <span data-lang-th="กลุ่มเล็ก 10 คน" data-lang-en="Small Group of 10">กลุ่มเล็ก 10 คน</span>
+          </div>
+        </div>
+        <div class="course-media">
+          <img src="https://images.unsplash.com/photo-1591132412169-fa19698a045b?w=700&h=500&fit=crop" alt="ผู้หญิงยืนอย่างสง่างามในแสงธรรมชาติ">
+        </div>
+      </div>
+
+      <div class="course-row reveal">
+        <div class="course-num">02</div>
+        <div class="course-body">
+          <h3 data-lang-th="ศิลปะการพูดในที่สาธารณะ" data-lang-en="The Art of Public Speaking">ศิลปะการพูดในที่สาธารณะ</h3>
+          <p data-lang-th="ฝึกยืนต่อหน้าผู้คน จัดระเบียบความคิด และเล่าเรื่องให้คนฟังอยากฟังต่อ ไม่ว่าจะเวทีเล็กในห้องประชุมหรือเวทีใหญ่กลางแจ้ง" data-lang-en="Practice standing before a crowd, structuring your thoughts, and telling stories people actually want to keep listening to — from a small meeting room to a wide open stage.">ฝึกยืนต่อหน้าผู้คน จัดระเบียบความคิด และเล่าเรื่องให้คนฟังอยากฟังต่อ ไม่ว่าจะเวทีเล็กในห้องประชุมหรือเวทีใหญ่กลางแจ้ง</p>
+          <div class="course-tags">
+            <span data-lang-th="8 สัปดาห์" data-lang-en="8 Weeks">8 สัปดาห์</span>
+            <span data-lang-th="ฝึกจริงบนเวที" data-lang-en="Live Stage Practice">ฝึกจริงบนเวที</span>
+          </div>
+        </div>
+        <div class="course-media">
+          <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&h=500&fit=crop" alt="แสงไฟบนเวทีตรงหน้าผู้ชม">
+        </div>
+      </div>
+
+      <div class="course-row reveal">
+        <div class="course-num">03</div>
+        <div class="course-body">
+          <h3 data-lang-th="การสื่อสารอย่างเข้าใจ" data-lang-en="Communicating with Understanding">การสื่อสารอย่างเข้าใจ</h3>
+          <p data-lang-th="เรียนรู้การฟังอย่างลึกซึ้ง การตั้งคำถามที่ดี และการสื่อสารในความสัมพันธ์ ทั้งที่ทำงานและที่บ้าน ให้ทุกบทสนทนากลายเป็นสะพานแทนกำแพง" data-lang-en="Learn deep listening, the art of good questions, and communication in every relationship — at work and at home — so every conversation becomes a bridge, not a wall.">เรียนรู้การฟังอย่างลึกซึ้ง การตั้งคำถามที่ดี และการสื่อสารในความสัมพันธ์ ทั้งที่ทำงานและที่บ้าน ให้ทุกบทสนทนากลายเป็นสะพานแทนกำแพง</p>
+          <div class="course-tags">
+            <span data-lang-th="4 สัปดาห์" data-lang-en="4 Weeks">4 สัปดาห์</span>
+            <span data-lang-th="เวิร์กช็อปคู่" data-lang-en="Paired Workshop">เวิร์กช็อปคู่</span>
+          </div>
+        </div>
+        <div class="course-media">
+          <img src="https://images.unsplash.com/photo-1764006195843-e6f9a5781500?w=700&h=500&fit=crop" alt="กลุ่มคนนั่งพูดคุยกันอย่างอบอุ่น">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST / STATS -->
+  <section class="trust">
+    <div class="wrap">
+      <div class="trust-grid">
+        <div class="reveal">
+          <span class="eyebrow" data-lang-th="เสียงจากรุ่นพี่" data-lang-en="From an Alumna">เสียงจากรุ่นพี่</span>
+          <p class="trust-quote" data-lang-th="ก่อนเรียน ผมพูดหน้าห้องไม่ได้แม้แต่สิบวินาที วันนี้ผมยืนพรีเซนต์งานต่อหน้าผู้บริหารสิบกว่าคนได้อย่างใจเย็น เหมือนกำลังเล่าเรื่องให้เพื่อนสนิทฟัง" data-lang-en="Before this course I couldn't stand in front of a room for ten seconds. Today I present to a dozen executives, calm as if I'm telling a story to a close friend.">ก่อนเรียน ผมพูดหน้าห้องไม่ได้แม้แต่สิบวินาที วันนี้ผมยืนพรีเซนต์งานต่อหน้าผู้บริหารสิบกว่าคนได้อย่างใจเย็น เหมือนกำลังเล่าเรื่องให้เพื่อนสนิทฟัง</p>
+          <div class="trust-quote-name" data-lang-th="— ธนกฤต ว. ผู้จัดการฝ่ายขาย รุ่นที่ 14" data-lang-en="— Thanakrit W., Sales Manager, Batch 14">— ธนกฤต ว. ผู้จัดการฝ่ายขาย รุ่นที่ 14</div>
+        </div>
+        <div class="stat-list reveal">
+          <div>
+            <div class="stat-num">18</div>
+            <div class="stat-label" data-lang-th="รุ่นที่เปิดสอน" data-lang-en="Batches Taught">รุ่นที่เปิดสอน</div>
+          </div>
+          <div>
+            <div class="stat-num">2,300+</div>
+            <div class="stat-label" data-lang-th="ผู้เรียนสำเร็จหลักสูตร" data-lang-en="Graduates">ผู้เรียนสำเร็จหลักสูตร</div>
+          </div>
+          <div>
+            <div class="stat-num">12</div>
+            <div class="stat-label" data-lang-th="ปีแห่งประสบการณ์" data-lang-en="Years of Experience">ปีแห่งประสบการณ์</div>
+          </div>
+          <div>
+            <div class="stat-num">96%</div>
+            <div class="stat-label" data-lang-th="แนะนำต่อให้เพื่อน" data-lang-en="Would Recommend">แนะนำต่อให้เพื่อน</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section class="founder" id="founder">
+    <div class="wrap">
+      <div class="founder-grid">
+        <div class="founder-media reveal">
+          <img src="https://images.unsplash.com/photo-1715177092963-d342663a8350?w=760&h=900&fit=crop" alt="ผู้ก่อตั้งยืนอยู่หน้าต่างในแสงธรรมชาติ">
+        </div>
+        <div class="founder-text reveal">
+          <span class="eyebrow" data-lang-th="ผู้ก่อตั้ง" data-lang-en="The Founder">ผู้ก่อตั้ง</span>
+          <h3 data-lang-th="ครูขจี ผู้ริเริ่มขจกโหก" data-lang-en="Kru Khajee, Founder of Khotchapak Hok">ครูขจี ผู้ริเริ่มขจกโหก</h3>
+          <span class="founder-role" data-lang-th="อดีตวิทยากรองค์กร 15 ปี" data-lang-en="Former Corporate Trainer, 15 Years">อดีตวิทยากรองค์กร 15 ปี</span>
+          <p data-lang-th="หลังจากใช้เวลากว่าทศวรรษบนเวทีสัมมนาองค์กรทั่วประเทศ ครูขจีพบว่าสิ่งที่คนขาดไม่ใช่เทคนิค แต่คือความเชื่อมั่นในเสียงของตัวเอง จึงก่อตั้งขจกโหกขึ้นในปี 2557 เพื่อสร้างพื้นที่เรียนรู้ที่อบอุ่นกว่าห้องประชุมทั่วไป" data-lang-en="After more than a decade on corporate seminar stages across the country, Kru Khajee realised what people lacked wasn't technique — it was trust in their own voice. She founded Khotchapak Hok in 2014 to build a warmer learning space than any conference room.">หลังจากใช้เวลากว่าทศวรรษบนเวทีสัมมนาองค์กรทั่วประเทศ ครูขจีพบว่าสิ่งที่คนขาดไม่ใช่เทคนิค แต่คือความเชื่อมั่นในเสียงของตัวเอง จึงก่อตั้งขจกโหกขึ้นในปี 2557 เพื่อสร้างพื้นที่เรียนรู้ที่อบอุ่นกว่าห้องประชุมทั่วไป</p>
+          <p data-lang-th="เธอเชื่อในการสอนแบบตัวต่อตัวจำนวนน้อย เพื่อให้มองเห็นความเป็นตัวตนของผู้เรียนแต่ละคนอย่างแท้จริง" data-lang-en="She believes in small, close-knit teaching — so every learner's true self can actually be seen.">เธอเชื่อในการสอนแบบตัวต่อตัวจำนวนน้อย เพื่อให้มองเห็นความเป็นตัวตนของผู้เรียนแต่ละคนอย่างแท้จริง</p>
+          <div class="founder-sign">Khajee</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="steps">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-lang-th="เริ่มต้นอย่างไร" data-lang-en="How It Works">เริ่มต้นอย่างไร</span>
+        <h2 class="section-title" data-lang-th="สี่ก้าวง่าย ๆ ก่อนวันแรกของคุณ" data-lang-en="Four easy steps before your first day">สี่ก้าวง่าย ๆ ก่อนวันแรกของคุณ</h2>
+      </div>
+      <div class="steps-list reveal">
+        <div class="step" data-step="1">
+          <h4 data-lang-th="พูดคุยเบื้องต้น" data-lang-en="An Introductory Chat">พูดคุยเบื้องต้น</h4>
+          <p data-lang-th="ทักแชทหรือโทรมาคุยกับทีมงานสัก 15 นาที เพื่อทำความรู้จักเป้าหมายและความกังวลของคุณ" data-lang-en="Message or call our team for a quick 15-minute chat, so we understand your goals and what's holding you back.">ทักแชทหรือโทรมาคุยกับทีมงานสัก 15 นาที เพื่อทำความรู้จักเป้าหมายและความกังวลของคุณ</p>
+        </div>
+        <div class="step" data-step="2">
+          <h4 data-lang-th="เลือกหลักสูตรที่ใช่" data-lang-en="Choose the Right Course">เลือกหลักสูตรที่ใช่</h4>
+          <p data-lang-th="ทีมงานช่วยแนะนำหลักสูตรและตารางเรียนที่เหมาะกับจังหวะชีวิตของคุณ" data-lang-en="Our team recommends the course and schedule that fits your pace of life.">ทีมงานช่วยแนะนำหลักสูตรและตารางเรียนที่เหมาะกับจังหวะชีวิตของคุณ</p>
+        </div>
+        <div class="step" data-step="3">
+          <h4 data-lang-th="พบกันในห้องเรียน" data-lang-en="Meet in the Room">พบกันในห้องเรียน</h4>
+          <p data-lang-th="เข้าเรียนในกลุ่มเล็ก บรรยากาศอบอุ่น ได้ลงมือฝึกจริงทุกครั้งที่พบกัน" data-lang-en="Join a small warm-lit group and practice for real every single session.">เข้าเรียนในกลุ่มเล็ก บรรยากาศอบอุ่น ได้ลงมือฝึกจริงทุกครั้งที่พบกัน</p>
+        </div>
+        <div class="step" data-step="4">
+          <h4 data-lang-th="ฝึกต่อในชีวิตจริง" data-lang-en="Practice in Real Life">ฝึกต่อในชีวิตจริง</h4>
+          <p data-lang-th="เราติดตามผลและให้คำแนะนำต่อเนื่องอีก 3 เดือนหลังจบหลักสูตร" data-lang-en="We follow up and keep coaching you for 3 months after the course ends.">เราติดตามผลและให้คำแนะนำต่อเนื่องอีก 3 เดือนหลังจบหลักสูตร</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-lang-th="เสียงจากผู้เรียน" data-lang-en="Learner Stories">เสียงจากผู้เรียน</span>
+        <h2 class="section-title" data-lang-th="เรื่องเล่าเล็ก ๆ ที่เปลี่ยนใหญ่" data-lang-en="Small stories, big change">เรื่องเล่าเล็ก ๆ ที่เปลี่ยนใหญ่</h2>
+      </div>
+      <div class="t-scroll reveal">
+        <div class="t-card">
+          <p data-lang-th="ห้องเรียนที่นี่ไม่กดดันเลย ทุกคนพร้อมรับฟังกันจริง ๆ ทำให้กล้าลองผิดลองถูกมากขึ้นเยอะ" data-lang-en="The classroom here never feels pressuring. Everyone truly listens, which made me so much more willing to try and stumble.">ห้องเรียนที่นี่ไม่กดดันเลย ทุกคนพร้อมรับฟังกันจริง ๆ ทำให้กล้าลองผิดลองถูกมากขึ้นเยอะ</p>
+          <div class="t-person">
+            <img src="https://images.unsplash.com/photo-1591132412169-fa19698a045b?w=100&h=100&fit=crop" alt="ผู้เรียนหญิง">
+            <div>
+              <div class="t-name">พิมพ์ชนก อ.</div>
+              <div class="t-role" data-lang-th="นักออกแบบอิสระ" data-lang-en="Freelance Designer">นักออกแบบอิสระ</div>
+            </div>
+          </div>
+        </div>
+        <div class="t-card">
+          <p data-lang-th="ผมเป็นวิศวกรที่กลัวการนำเสนอมาก หลังเรียนจบ ผมพรีเซนต์โปรเจกต์ใหญ่ให้ลูกค้าต่างชาติได้อย่างมั่นใจ" data-lang-en="I'm an engineer who used to dread presentations. After this course, I confidently pitched a major project to an overseas client.">ผมเป็นวิศวกรที่กลัวการนำเสนอมาก หลังเรียนจบ ผมพรีเซนต์โปรเจกต์ใหญ่ให้ลูกค้าต่างชาติได้อย่างมั่นใจ</p>
+          <div class="t-person">
+            <img src="https://images.unsplash.com/photo-1715177092963-d342663a8350?w=100&h=100&fit=crop" alt="ผู้เรียนชาย">
+            <div>
+              <div class="t-name">ณัฐวุฒิ ก.</div>
+              <div class="t-role" data-lang-th="วิศวกรโครงสร้าง" data-lang-en="Structural Engineer">วิศวกรโครงสร้าง</div>
+            </div>
+          </div>
+        </div>
+        <div class="t-card">
+          <p data-lang-th="ที่บ้านคุยกันน้อยมาก พอเรียนคอร์สสื่อสาร กลับไปคุยกับแม่ได้ลึกซึ้งขึ้นกว่าที่เคยเป็นมาตลอดสิบปี" data-lang-en="My family barely talked. After the communication course, I finally had deeper conversations with my mother than in the past ten years.">ที่บ้านคุยกันน้อยมาก พอเรียนคอร์สสื่อสาร กลับไปคุยกับแม่ได้ลึกซึ้งขึ้นกว่าที่เคยเป็นมาตลอดสิบปี</p>
+          <div class="t-person">
+            <img src="https://images.unsplash.com/photo-1581714161666-dade083654ae?w=100&h=100&fit=crop" alt="ผู้เรียนหญิง">
+            <div>
+              <div class="t-name">สุพิชญา ล.</div>
+              <div class="t-role" data-lang-th="ครูสอนดนตรี" data-lang-en="Music Teacher">ครูสอนดนตรี</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FULL BLEED -->
+  <section class="cta-bleed" id="contact-cta">
+    <img src="https://images.unsplash.com/photo-1527488982891-99714e169214?w=1600&h=900&fit=crop" alt="พระอาทิตย์ขึ้นเหนือโขดหินริมทะเล">
+    <div class="wrap">
+      <div class="cta-inner reveal">
+        <span class="eyebrow" style="color:#E4B394" data-lang-th="พร้อมเริ่มหรือยัง" data-lang-en="Ready When You Are">พร้อมเริ่มหรือยัง</span>
+        <h2 data-lang-th="เริ่มบทใหม่ของคุณ ในเสียงที่เป็นตัวคุณเอง" data-lang-en="Begin a new chapter, in a voice that's truly yours">เริ่มบทใหม่ของคุณ ในเสียงที่เป็นตัวคุณเอง</h2>
+        <p data-lang-th="รุ่นถัดไปเปิดรับจำนวนจำกัดเพียง 10 ที่นั่ง เพื่อให้เราดูแลผู้เรียนทุกคนได้อย่างทั่วถึง" data-lang-en="Our next batch is limited to just 10 seats, so every learner gets our full attention.">รุ่นถัดไปเปิดรับจำนวนจำกัดเพียง 10 ที่นั่ง เพื่อให้เราดูแลผู้เรียนทุกคนได้อย่างทั่วถึง</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary" data-lang-th="จองที่นั่งของคุณ" data-lang-en="Reserve Your Seat">จองที่นั่งของคุณ</a>
+          <a href="tel:+66812345678" class="btn btn-outline-light" data-lang-th="โทรสอบถาม" data-lang-en="Call Us">โทรสอบถาม</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="reveal">
+        <div class="foot-logo">KHOTCHAPAK HOK</div>
+        <p class="foot-tagline" data-lang-th="สถาบันพัฒนาบุคลิกภาพ การพูดในที่สาธารณะ และการสื่อสาร ในบรรยากาศอบอุ่นและเป็นธรรมชาติ" data-lang-en="An institute for personality development, public speaking, and communication — in a warm, natural atmosphere.">สถาบันพัฒนาบุคลิกภาพ การพูดในที่สาธารณะ และการสื่อสาร ในบรรยากาศอบอุ่นและเป็นธรรมชาติ</p>
+        <div class="foot-social">
+          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Youtube"><i data-lucide="youtube"></i></a>
+        </div>
+      </div>
+      <div class="foot-col reveal">
+        <span class="foot-label" data-lang-th="ติดต่อเรา" data-lang-en="Contact">ติดต่อเรา</span>
+        <a href="tel:+66812345678">081-234-5678</a>
+        <a href="mailto:hello@khotchapakhok.co">hello@khotchapakhok.co</a>
+        <p data-lang-th="อาคารสวนแสงเช้า ถนนเลียบคลอง กรุงเทพฯ" data-lang-en="Suan Saeng Chao Building, Riverside Road, Bangkok">อาคารสวนแสงเช้า ถนนเลียบคลอง กรุงเทพฯ</p>
+      </div>
+      <div class="foot-col reveal">
+        <span class="foot-label" data-lang-th="ลิงก์ด่วน" data-lang-en="Quick Links">ลิงก์ด่วน</span>
+        <a href="#philosophy" data-lang-th="แนวคิด" data-lang-en="Philosophy">แนวคิด</a>
+        <a href="#courses" data-lang-th="หลักสูตร" data-lang-en="Courses">หลักสูตร</a>
+        <a href="#founder" data-lang-th="ผู้ก่อตั้ง" data-lang-en="Founder">ผู้ก่อตั้ง</a>
+        <a href="#testimonials" data-lang-th="เสียงจากผู้เรียน" data-lang-en="Stories">เสียงจากผู้เรียน</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-lang-th="© 2569 ขจกโหก สงวนลิขสิทธิ์" data-lang-en="© 2026 Khotchapak Hok. All rights reserved.">© 2569 ขจกโหก สงวนลิขสิทธิ์</span>
+      <span data-lang-th="ออกแบบด้วยความตั้งใจในกรุงเทพฯ" data-lang-en="Designed with care in Bangkok">ออกแบบด้วยความตั้งใจในกรุงเทพฯ</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // header shrink on scroll
+  var header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 40){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  });
+
+  // mobile menu
+  var burger = document.getElementById('burgerBtn');
+  var closeBtn = document.getElementById('mobileMenuClose');
+  var menu = document.getElementById('mobileMenu');
+  var overlay = document.getElementById('menuOverlay');
+  function openMenu(){ menu.classList.add('open'); overlay.classList.add('show'); }
+  function closeMenu(){ menu.classList.remove('open'); overlay.classList.remove('show'); }
+  burger.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+
+  // scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(function(el){ io.observe(el); });
+
+  lucide.createIcons();
+</script>
+
+<script>
+(function(){var K='site-lang',L=localStorage.getItem(K)||'th';function S(l){L=l;localStorage.setItem(K,l);document.documentElement.lang=l;document.querySelectorAll('[data-lang-th]').forEach(function(e){var t=e.getAttribute('data-lang-'+l);if(t!==null){if(/[<&]/.test(t)){e.innerHTML=t}else{e.textContent=t}}});var lb=document.querySelector('.lang-sw__label');if(lb){lb.textContent=l.toUpperCase()}}var sw=document.querySelector('.lang-sw');if(sw){sw.addEventListener('click',function(){S(L==='th'?'en':'th')});sw.style.cursor='pointer'}if(L!=='th'){S(L)}})();
+</script>
+
+</body>
+</html>
