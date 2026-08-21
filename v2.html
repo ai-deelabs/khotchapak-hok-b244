@@ -482,6 +482,13 @@
   @media(min-width:1024px){
     .hero h1{font-size:clamp(3rem,6vw,5.6rem);}
   }
+
+  /* Mobile header fix: the booking CTA had no mobile rule at all, so it stayed in
+     the nav row on phones and squeezed the logo and lang switch to breaking point. */
+  @media(max-width:767px){
+    #siteHeader .nav-right .btn{display:none;}
+    #siteHeader .logo{white-space:nowrap;}
+  }
 </style>
 </head>
 <body>

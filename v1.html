@@ -347,6 +347,15 @@
     .hero-title{font-size:4.2rem;}
     .hero-media{width:52vw;}
   }
+
+  /* Mobile header fix: the booking CTA carries .btn, whose display:inline-flex is
+     declared after .nav-cta{display:none} and wins the specificity tie — so the
+     button stayed in the nav on phones and squeezed the whole row. Scoped by id
+     so it wins outright, and inside max-width so desktop is untouched. */
+  @media(max-width:767px){
+    #siteHeader .nav-cta{display:none;}
+    #siteHeader .logo-word{white-space:nowrap;}
+  }
 </style>
 </head>
 <body>
